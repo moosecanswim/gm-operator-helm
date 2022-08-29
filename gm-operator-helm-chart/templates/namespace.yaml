@@ -1,4 +1,8 @@
+
+{{- if .Values.create_operator_namespace }}
 apiVersion: v1
 kind: Namespace
 metadata:
   name: gm-operator
+
+{{- end }}
