@@ -7,7 +7,5 @@ operator:
     - git@github.com:greymatter-io/gitops-core.git
     - -sshPrivateKeyPath
     - /app/.ssh/ssh_private_key
-    - -branch
-    - no-auto-apply-image-pull-secret
-    - -sshPrivateKeyPassword
-    - password 
+    - -tag
+    - v0.9.3
