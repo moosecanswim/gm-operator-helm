@@ -1,0 +1,27 @@
+metadata:
+  name: gm-leader-election-rolebinding
+  namespace: gm-operator
+subjects:
+  - kind: ServiceAccount
+    name: gm-operator
+    namespace: gm-operator
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: gm-leader-election-role
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+---
+metadata:
+  name: gm-operator-rolebinding
+subjects:
+  - kind: ServiceAccount
+    name: gm-operator
+    namespace: gm-operator
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: gm-operator-role
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+---

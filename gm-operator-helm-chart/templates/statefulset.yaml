@@ -1,0 +1,92 @@
+metadata:
+  labels:
+    name: gm-operator
+  name: gm-operator
+  namespace: gm-operator
+spec:
+  serviceName: gm-operator
+  replicas: 1
+  selector:
+    matchLabels:
+      name: gm-operator
+  template:
+    metadata:
+      labels:
+        name: gm-operator
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        fsGroup: 1000
+      containers:
+        - image: quay.io/greymatterio/operator:kyle
+          name: operator
+          command:
+            - /app/operator
+          args:
+            - -repo
+            - git@github.com:greymatter-io/gitops-core.git
+            - -sshPrivateKeyPath
+            - /app/.ssh/ssh_private_key
+            - -branch
+            - no-auto-apply-image-pull-secret
+            - -sshPrivateKeyPassword
+            - password 
+
+          ports:
+            - containerPort: 9443
+              name: webhook-server
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: 8081
+            initialDelaySeconds: 120
+            periodSeconds: 10
+          resources:
+            limits:
+              cpu: 300m
+              memory: 500Mi
+            requests:
+              cpu: 100m
+              memory: 150Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+          volumeMounts:
+            - mountPath: /tmp/k8s-webhook-server/serving-certs
+              name: webhook-cert
+              readOnly: true
+            - name: overrides-cue
+              mountPath: /app/core/overrides.cue
+              subPath: overrides.cue
+            - name: greymatter-sync-secret
+              readOnly: true
+              mountPath: /app/.ssh
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8081
+            initialDelaySeconds: 120
+            periodSeconds: 20
+          imagePullPolicy: Always
+      imagePullSecrets: []
+      serviceAccountName: gm-operator
+      terminationGracePeriodSeconds: 10
+      volumes:
+        - name: webhook-cert
+          secret:
+            defaultMode: 420
+            items:
+              - key: tls.crt
+                path: tls.crt
+              - key: tls.key
+                path: tls.key
+            secretName: gm-webhook-cert
+        - name: overrides-cue
+          configMap:
+            name: overrides-cue
+        - name: greymatter-sync-secret
+          secret:
+            defaultMode: 256
+            secretName: greymatter-sync-secret
+kind: StatefulSet
+apiVersion: apps/v1
