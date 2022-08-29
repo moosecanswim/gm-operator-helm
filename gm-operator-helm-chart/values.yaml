@@ -1,6 +1,7 @@
 create_operator_namespace: false
 
 operator:
+  image: quay.io/greymatterio/operator:0.9.3
   arguments:
     - -repo
     - git@github.com:greymatter-io/gitops-core.git

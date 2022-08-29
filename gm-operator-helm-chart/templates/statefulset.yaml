@@ -18,7 +18,7 @@ spec:
         runAsNonRoot: true
         fsGroup: 1000
       containers:
-        - image: quay.io/greymatterio/operator:kyle
+        - image: {{ .Values.operator.image }}
           name: operator
           command:
             - /app/operator
