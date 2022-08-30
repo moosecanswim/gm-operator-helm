@@ -1,3 +1,4 @@
+{{- if .Values.lettuce.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -60,4 +61,4 @@ spec:
         - name: web-volume
           configMap:
             name: lettuce-web
----
+{{- end }}
