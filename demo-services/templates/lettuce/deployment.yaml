@@ -17,7 +17,7 @@ spec:
         greymatter.io/cluster: {{ tpl .Values.lettuce.xds_cluster .}}
     spec:
       containers:
-        - name: lettuce
+        - name: {{ tpl .Values.lettuce.xds_cluster .}}
           image: python:3
           command: ["python"]
           args: ["-m", "http.server", "8080", "--directory", "web"]

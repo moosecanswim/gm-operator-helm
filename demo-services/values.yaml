@@ -4,7 +4,7 @@ greymatter:
   redis_host: redis.greymatter.svc
 
 apple:
-  enabled: false
+  enabled: true
   name: apple
   xds_cluster: "{{.Release.Namespace }}-apple"
 
@@ -24,7 +24,7 @@ tomato:
   xds_cluster: "{{.Release.Namespace }}-tomato"
 
 sync:
-  enabled: true
+  enabled: false
   image: quay.io/greymatterio/cli:4.3.0
   git:
     repo: git@github.com:your-org/gitops-plus.git
