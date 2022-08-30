@@ -41,6 +41,8 @@ spec:
           - "--forever"
           - "--branch"
           - "{{.Values.sync.git.branch}}"
+          - "--redis-addr"
+          - "{{.Values.greymatter.redis_host}}:6379"
           - "--interval"
           - "10s"
           - "--git-dir"

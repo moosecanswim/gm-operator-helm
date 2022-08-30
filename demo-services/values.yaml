@@ -1,6 +1,7 @@
 greymatter:
   xds_host: controlensemble.greymatter.svc.cluster.local
   catalog_host: catalog.greymatter.svc.cluster.local
+  redis_host: redis.greymatter.svc
 
 apple:
   enabled: false
