@@ -5,5 +5,5 @@ data:
 kind: ConfigMap
 metadata:
   name: apple-web
-  namespace: examples
+  namespace: {{ .Release.Namespace }}
 {{- end }}

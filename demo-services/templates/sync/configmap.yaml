@@ -3,7 +3,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: greymatter-sync-config
-  namespace: plus
+  namespace: {{ .Release.Namespace }}
 data:
   # property-like keys; each key maps to a simple value
   GREYMATTER_GIT_REMOTE: "{{.Values.sync.git.repo}}"

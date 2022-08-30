@@ -5,5 +5,5 @@ data:
 kind: ConfigMap
 metadata:
   name: banana-web
-  namespace: examples
+  namespace: {{ .Release.Namespace }}
 {{- end }}

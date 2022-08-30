@@ -5,5 +5,5 @@ data:
 kind: ConfigMap
 metadata:
   name: lettuce-web
-  namespace: examples
+  namespace: {{ .Release.Namespace }}
 {{- end }}

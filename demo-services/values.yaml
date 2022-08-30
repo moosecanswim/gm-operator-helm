@@ -23,8 +23,9 @@ tomato:
   xds_cluster: "{{.Release.Namespace }}-tomato"
 
 sync:
-  enabled: false
+  enabled: true
   image: quay.io/greymatterio/cli:4.3.0
   git:
     repo: git@github.com:your-org/gitops-plus.git
     branch: main
+    ssh_private_key: REPLACE_THIS_BASE64
