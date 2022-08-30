@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: banana
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: banana
+  template:
+    metadata:
+      # annotations:
+      #   greymatter.io/inject-sidecar-to: "8080"
+      labels:
+        app: banana
+        greymatter.io/cluster: {{ tpl .Values.banana.xds_cluster .}}
+    spec:
+      containers:
+        - name: banana
+          image: python:3
+          command: ["python"]
+          args: ["-m", "http.server", "8080", "--directory", "web"]
+          volumeMounts:
+            - name: web-volume
+              mountPath: /web
+          resources:
+            limits:
+              cpu: 200m
+              memory: 512Mi
+            requests:
+              cpu: 50m
+              memory: 128Mi
+        - name: sidecar
+          image: quay.io/greymatterio/gm-proxy:1.7.0
+          ports:
+            - name: proxy
+              containerPort: 10808
+              protocol: TCP
+            - name: metrics
+              containerPort: 8081
+              protocol: TCP
+          env:
+            - name: XDS_CLUSTER
+              value: {{ tpl .Values.banana.xds_cluster .}}
+            - name: ENVOY_ADMIN_LOG_PATH
+              value: /dev/stdout
+            - name: PROXY_DYNAMIC
+              value: 'true'
+            - name: XDS_ZONE
+              value: default-zone
+            - name: XDS_HOST
+              value: {{ .Values.greymatter.xds_host }}
+            - name: XDS_PORT
+              value: '50000'
+          resources: {}
+          imagePullPolicy: Always
+      imagePullSecrets:
+        - name: gm-docker-secret
+      volumes:
+        - name: web-volume
+          configMap:
+            name: banana-web
+---

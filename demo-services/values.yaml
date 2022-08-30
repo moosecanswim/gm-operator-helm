@@ -1,0 +1,18 @@
+greymatter:
+  xds_host: controlensemble.greymatter.svc.cluster.local
+
+apple:
+  name: apple
+  xds_cluster: "{{.Release.Namespace }}-apple"
+
+banana:
+  name: banana
+  xds_cluster: "{{.Release.Namespace }}-banana"
+
+lettuce:
+  name: lettuce
+  xds_cluster: "{{.Release.Namespace }}-lettuce"
+
+tomato:
+  name: tomato
+  xds_cluster: "{{.Release.Namespace }}-tomato"

@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  index.html: This is totally bananas.
+kind: ConfigMap
+metadata:
+  name: banana-web
+  namespace: examples
+---

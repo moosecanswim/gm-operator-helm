@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  index.html: Everybody romaine calm!
+kind: ConfigMap
+metadata:
+  name: lettuce-web
+  namespace: examples
+---
