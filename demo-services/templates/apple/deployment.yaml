@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: apple
+  name: {{ tpl .Values.apple.xds_cluster .}}
   namespace: {{ .Release.Namespace }}
 spec:
   selector:
@@ -17,7 +17,7 @@ spec:
         greymatter.io/cluster: {{ tpl .Values.apple.xds_cluster .}}
     spec:
       containers:
-        - name: {{ tpl .Values.apple.xds_cluster .}}
+        - name: apple
           image: python:3
           command: ["python"]
           args: ["-m", "http.server", "8080", "--directory", "web"]

@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: tomato
+  name: {{ tpl .Values.tomato.xds_cluster .}}
   namespace: examples
 spec:
   selector:
@@ -17,7 +17,7 @@ spec:
         greymatter.io/cluster: {{ tpl .Values.tomato.xds_cluster .}}
     spec:
       containers:
-        - name: {{ tpl .Values.tomato.xds_cluster .}}
+        - name: tomato
           image: python:3
           command: ["python"]
           args: ["-m", "http.server", "8080", "--directory", "web"]

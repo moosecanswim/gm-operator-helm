@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: lettuce
+  name: {{ tpl .Values.banana.xds_cluster .}}
   namespace: {{ .Release.Namespace }}
 spec:
   selector:
@@ -17,7 +17,7 @@ spec:
         greymatter.io/cluster: {{ tpl .Values.lettuce.xds_cluster .}}
     spec:
       containers:
-        - name: {{ tpl .Values.lettuce.xds_cluster .}}
+        - name: lettuce
           image: python:3
           command: ["python"]
           args: ["-m", "http.server", "8080", "--directory", "web"]
