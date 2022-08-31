@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ tpl .Values.tomato.xds_cluster .}}
-  namespace: examples
+  namespace: {{ .Release.Namespace }}
 spec:
   selector:
     matchLabels:
