@@ -5,5 +5,5 @@ data:
 kind: ConfigMap
 metadata:
   name: tomato-web
-  namespace: examples
+  namespace: {{ .Release.Namespace }}
 {{- end }}
