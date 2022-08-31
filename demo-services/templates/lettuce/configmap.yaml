@@ -1,7 +1,7 @@
 {{- if .Values.lettuce.enabled }}
 apiVersion: v1
 data:
-  index.html: Everybody romaine calm!
+  index.html: Everybody romaine calm! [xds_cluster={{ tpl .Values.lettuce.xds_cluster .}}]
 kind: ConfigMap
 metadata:
   name: lettuce-web
