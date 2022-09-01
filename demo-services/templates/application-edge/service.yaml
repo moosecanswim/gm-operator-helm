@@ -1,0 +1,16 @@
+{{- if .Values.app_edge.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ tpl .Values.app_edge.xds_cluster . }}
+  namespace: {{.Release.Namespace}}
+spec:
+  ports:
+  - name: ingress
+    port: 10808
+    protocol: TCP
+    targetPort: 10808
+  selector:
+    greymatter.io/cluster: {{ tpl .Values.app_edge.xds_cluster . }}
+  type: LoadBalancer
+{{- end }}

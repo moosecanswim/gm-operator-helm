@@ -2,26 +2,33 @@ greymatter:
   xds_host: controlensemble.greymatter.svc.cluster.local
   catalog_host: catalog.greymatter.svc.cluster.local
   redis_host: redis.greymatter.svc
+  proxy:
+    image: quay.io/greymatterio/gm-proxy:1.7.0
+
+app_edge:
+  enabled: true
+  name: grocerylist-edge
+  xds_cluster: "{{.Release.Namespace }}-{{ .Values.app_edge.name }}"
 
 apple:
   enabled: true
   name: apple
-  xds_cluster: "{{.Release.Namespace }}-apple"
+  xds_cluster: "{{.Release.Namespace }}-{{.Values.apple.name}}"
 
 banana:
   enabled: false
   name: banana
-  xds_cluster: "{{.Release.Namespace }}-banana"
+  xds_cluster: "{{.Release.Namespace }}-{{.Values.banana.name}}"
 
 lettuce:
   enabled: false
   name: lettuce
-  xds_cluster: "{{.Release.Namespace }}-lettuce"
+  xds_cluster: "{{.Release.Namespace }}-{{.Values.lettuce.name}}"
 
 tomato:
   enabled: false
   name: tomato
-  xds_cluster: "{{.Release.Namespace }}-tomato"
+  xds_cluster: "{{.Release.Namespace }}-{{.Values.tomato.name}}"
 
 sync:
   enabled: false

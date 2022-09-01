@@ -1,0 +1,50 @@
+{{- if .Values.app_edge.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ tpl .Values.app_edge.xds_cluster . }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      greymatter.io/cluster: {{ tpl .Values.app_edge.xds_cluster . }}
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        greymatter.io/cluster: {{ tpl .Values.app_edge.xds_cluster . }}
+    spec:
+      containers:
+      - env:
+        - name: XDS_CLUSTER
+          value: {{ tpl .Values.app_edge.xds_cluster . }}
+        - name: ENVOY_ADMIN_LOG_PATH
+          value: /dev/stdout
+        - name: PROXY_DYNAMIC
+          value: "true"
+        - name: XDS_ZONE
+          value: default-zone
+        - name: XDS_HOST
+          value: {{ .Values.greymatter.xds_host }}
+        - name: XDS_PORT
+          value: "50000"
+        image: {{.Values.greymatter.proxy.image}}
+        imagePullPolicy: Always
+        name: sidecar
+        ports:
+        - containerPort: 10808
+          name: proxy
+          protocol: TCP
+        - containerPort: 8081
+          name: metrics
+          protocol: TCP
+        resources: {}
+      imagePullSecrets:
+      - name: gm-docker-secret
+      restartPolicy: Always
+{{- end }}
