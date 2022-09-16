@@ -3,7 +3,7 @@ metadata:
   labels:
     name: greymatter-operator
   name: greymatter-operator
-  namespace: greymatter-operator
+  namespace: gm-operator
 spec:
   serviceName: greymatter-operator
   replicas: 1
