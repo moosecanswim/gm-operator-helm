@@ -1,11 +1,12 @@
 create_operator_namespace: false
+create_greymatter_namespace: true
 
 operator:
-  image: quay.io/greymatterio/operator:0.9.3
+  image: quay.io/greymatterio/operator:0.10.0
   arguments:
     - -repo
     - git@github.com:greymatter-io/gitops-core.git
     - -sshPrivateKeyPath
     - /app/.ssh/ssh_private_key
     - -tag
-    - v0.9.3
+    - v0.10.0

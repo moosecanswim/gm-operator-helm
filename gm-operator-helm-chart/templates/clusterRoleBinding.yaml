@@ -1,18 +1,3 @@
-
-metadata:
-  name: gm-leader-election-rolebinding
-  namespace: gm-operator
-subjects:
-  - kind: ServiceAccount
-    name: greymatter-operator
-    namespace: gm-operator
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: gm-leader-election-role
-kind: RoleBinding
-apiVersion: rbac.authorization.k8s.io/v1
----
 metadata:
   name: gm-operator-gm-operator-rolebinding
 subjects:
@@ -26,3 +11,17 @@ roleRef:
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 ---
+
+metadata:
+  name: gm-operator-vector-agent-clusterrolebinding
+  namespace: greymatter
+subjects:
+  - kind: ServiceAccount
+    name: vector-agent
+    namespace: greymatter
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: gm-operator-vector-agent
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1

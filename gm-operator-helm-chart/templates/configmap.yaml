@@ -1,3 +1,4 @@
+
 metadata:
   name: overrides-cue
   namespace: gm-operator
@@ -7,10 +8,10 @@ data:
 
     config: {
       spire: false
-      auto_apply_mesh: true
       openshift: false
       generate_webhook_certs: true
-      auto_copy_image_pull_secret: true 
+      enable_historical_metrics: true
+      auto_copy_image_pull_secret: true
     }
 kind: ConfigMap
 apiVersion: v1

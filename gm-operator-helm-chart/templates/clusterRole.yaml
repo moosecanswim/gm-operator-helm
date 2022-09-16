@@ -1,54 +1,24 @@
+
 metadata:
-  name: gm-operator-role
+  name: gm-operator-gm-operator-role
 rules:
-  - apiGroups:
-      - apiextensions.k8s.io
-    resourceNames:
-      - meshes.greymatter.io
-    resources:
-      - customresourcedefinitions
-    verbs:
-      - get
-  - apiGroups:
-      - greymatter.io
-    resources:
-      - meshes
-    verbs:
-      - create
-      - delete
-      - get
-      - list
-      - patch
-      - update
-      - watch
-  - apiGroups:
-      - greymatter.io
-    resources:
-      - meshes/status
-    verbs:
-      - get
-      - patch
-      - update
-  - apiGroups:
-      - admissionregistration.k8s.io
-    resourceNames:
-      - gm-mutate-config
-      - gm-validate-config
-    resources:
-      - mutatingwebhookconfigurations
-      - validatingwebhookconfigurations
-    verbs:
-      - get
-      - patch
   - apiGroups:
       - apps
     resources:
       - deployments
       - statefulsets
     verbs:
+      - watch
       - get
       - list
       - create
+      - update
+  - apiGroups:
+      - apps
+    resources:
+      - deployments/finalizers
+      - statefulsets/finalizers
+    verbs:
       - update
   - apiGroups:
       - ""
@@ -77,6 +47,7 @@ rules:
       - pods
     verbs:
       - list
+      - update
   - apiGroups:
       - networking.k8s.io
     resources:
@@ -138,3 +109,20 @@ rules:
       - watch
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
+
+---
+
+metadata:
+  name: gm-operator-vector-agent
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - pods
+      - namespaces
+    verbs:
+      - list
+      - watch
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+---

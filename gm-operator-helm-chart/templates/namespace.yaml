@@ -6,3 +6,12 @@ metadata:
   name: gm-operator
 
 {{- end }}
+---
+{{- if .Values.create_greymatter_namespace}}
+metadata:
+  labels:
+    name: greymatter
+  name: greymatter
+kind: Namespace
+apiVersion: v1
+{{- end }}

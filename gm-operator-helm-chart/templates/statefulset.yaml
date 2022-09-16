@@ -1,18 +1,19 @@
+
 metadata:
   labels:
-    name: gm-operator
-  name: gm-operator
-  namespace: gm-operator
+    name: greymatter-operator
+  name: greymatter-operator
+  namespace: greymatter-operator
 spec:
-  serviceName: gm-operator
+  serviceName: greymatter-operator
   replicas: 1
   selector:
     matchLabels:
-      name: gm-operator
+      name: greymatter-operator
   template:
     metadata:
       labels:
-        name: gm-operator
+        name: greymatter-operator
     spec:
       securityContext:
         runAsNonRoot: true
@@ -24,6 +25,13 @@ spec:
             - /app/operator
           args:
 {{ toYaml .Values.operator.arguments | indent 12 }}
+          env:
+            - name: BUGSNAG_API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: bugsnag-api-token
+                  key: token
+                  optional: true
           ports:
             - containerPort: 9443
               name: webhook-server
@@ -36,8 +44,8 @@ spec:
             periodSeconds: 10
           resources:
             limits:
-              cpu: 300m
-              memory: 500Mi
+              cpu: 200m
+              memory: 300Mi
             requests:
               cpu: 100m
               memory: 150Mi
@@ -61,7 +69,7 @@ spec:
             periodSeconds: 20
           imagePullPolicy: Always
       imagePullSecrets: []
-      serviceAccountName: gm-operator
+      serviceAccountName: greymatter-operator
       terminationGracePeriodSeconds: 10
       volumes:
         - name: webhook-cert
