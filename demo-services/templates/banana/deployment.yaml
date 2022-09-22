@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ tpl .Values.banana.xds_cluster .}}
+  name: {{ tpl .Values.banana.name .}}
   namespace: {{ .Release.Namespace }}
   labels:
     greymatter.io/cluster: {{ tpl .Values.banana.xds_cluster .}}

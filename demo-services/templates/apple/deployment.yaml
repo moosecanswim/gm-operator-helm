@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ tpl .Values.apple.xds_cluster .}}
+  name: {{ tpl .Values.apple.name .}}
   namespace: {{ .Release.Namespace }}
   labels:
     greymatter.io/cluster: {{ tpl .Values.apple.xds_cluster .}}

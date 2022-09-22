@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ tpl .Values.tomato.xds_cluster .}}
+  name: {{ tpl .Values.tomato.name .}}
   namespace: {{ .Release.Namespace }}
   labels:
     greymatter.io/cluster: {{ tpl .Values.tomato.xds_cluster .}}
