@@ -4,8 +4,8 @@ kind: Deployment
 metadata:
   name: {{ tpl .Values.banana.name .}}
   namespace: {{ .Release.Namespace }}
-  labels:
-    greymatter.io/cluster: {{ tpl .Values.banana.xds_cluster .}}
+  # labels:
+  #   greymatter.io/cluster: {{ tpl .Values.banana.xds_cluster .}}
 spec:
   selector:
     matchLabels:
@@ -16,7 +16,7 @@ spec:
       #   greymatter.io/inject-sidecar-to: "8080"
       labels:
         app: banana
-        # greymatter.io/cluster: {{ tpl .Values.banana.xds_cluster .}}
+        greymatter.io/cluster: {{ tpl .Values.banana.xds_cluster .}}
     spec:
       containers:
         - name: banana
