@@ -4,6 +4,8 @@ kind: Deployment
 metadata:
   name: {{ tpl .Values.apple.xds_cluster .}}
   namespace: {{ .Release.Namespace }}
+  labels:
+    greymatter.io/cluster: {{ tpl .Values.apple.xds_cluster .}}
 spec:
   selector:
     matchLabels:
@@ -14,7 +16,7 @@ spec:
       #   greymatter.io/inject-sidecar-to: "8080"
       labels:
         app: apple
-        greymatter.io/cluster: {{ tpl .Values.apple.xds_cluster .}}
+        # greymatter.io/cluster: {{ tpl .Values.apple.xds_cluster .}}
     spec:
       containers:
         - name: apple

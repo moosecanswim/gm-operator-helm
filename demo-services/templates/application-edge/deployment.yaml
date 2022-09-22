@@ -4,11 +4,13 @@ kind: Deployment
 metadata:
   name: {{ tpl .Values.app_edge.xds_cluster . }}
   namespace: {{ .Release.Namespace }}
+  labels:
+    greymatter.io/cluster: {{ tpl .Values.app_edge.xds_cluster . }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      greymatter.io/cluster: {{ tpl .Values.app_edge.xds_cluster . }}
+      app: {{ tpl .Values.app_edge.xds_cluster . }}
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -17,7 +19,7 @@ spec:
   template:
     metadata:
       labels:
-        greymatter.io/cluster: {{ tpl .Values.app_edge.xds_cluster . }}
+        app: {{ tpl .Values.app_edge.xds_cluster . }}
     spec:
       containers:
       - env:
